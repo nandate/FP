@@ -5,4 +5,5 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   enum role: {user: 0, fp: 1}
+  has_many :timesheets
 end
