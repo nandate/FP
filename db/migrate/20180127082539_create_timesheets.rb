@@ -3,7 +3,7 @@ class CreateTimesheets < ActiveRecord::Migration[5.1]
     create_table :timesheets do |t|
       t.references :user, foreign_key: true
       t.datetime :start_time
-      t.integer :status
+      t.integer :status, default: 0
 
       t.timestamps
     end
