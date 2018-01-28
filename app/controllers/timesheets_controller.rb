@@ -13,7 +13,7 @@ class TimesheetsController < ApplicationController
     if @timesheet.save
       redirect_to timesheets_path
     else
-      render new
+      render :new
     end
   end
 
