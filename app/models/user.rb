@@ -6,4 +6,5 @@ class User < ApplicationRecord
 
   enum role: {user: 0, fp: 1}
   has_many :timesheets
+  has_many :tickets
 end
