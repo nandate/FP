@@ -1,4 +1,6 @@
 h1 All TimeSheets
 - @timesheets.each do |timesheet|
-  h2= timesheet.start_time
-  h2= timesheet.user_id
+  .panel.panel-default
+    .container
+      h2 =timesheet.start_time
+      h2 FP name: #{timesheet.user.name}
