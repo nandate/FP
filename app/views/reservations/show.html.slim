@@ -1,0 +1,17 @@
+- if current_user.user?
+  h1 承認待ちの予約
+  - @reservation.waiting_reservations.each do |reservation|
+    h3 start_time: #{reservation.start_time}
+    h3 fp_name: #{reservation.user.name}
+
+
+  //#
+  h1 承認済みの予約
+  - @reservation.approved_reservations.each do |reservation|
+    h3 start_time: #{reservation.start_time}
+    h3 fp_name: #{reservation.user.name}
+
+- else
+  h1 未承認の予約
+
+  h1 承認した予約

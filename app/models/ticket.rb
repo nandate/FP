@@ -2,5 +2,5 @@ class Ticket < ApplicationRecord
   belongs_to :user
   belongs_to :timesheet
 
-  enum status: { unsold: 0, waiting: 1 }
+  enum status: { waiting: 0 , approved: 1}
 end

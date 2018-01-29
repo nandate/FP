@@ -3,5 +3,6 @@ h1 = @user.name
 
 - if current_user.fp?
   =link_to "予定枠の作成", new_timesheet_path
+  
 - else
   =link_to "予定枠一覧", timesheets_path
