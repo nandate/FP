@@ -2,8 +2,8 @@ h1 All TimeSheets
 - @timesheets.each do |timesheet|
   .panel.panel-default
     .container
-      h2 =timesheet.start_time
-      h2 FP name: #{timesheet.user.name}
-      = form_tag reservation_path, method: :create do
+      h3 開始時刻:#{timesheet.start_time}
+      h3 ファイナンシャルプランナー:#{timesheet.user.name}
+      = form_tag tickets_path, method: :create do
         = hidden_field_tag "timesheet_id", timesheet.id
         = submit_tag "予約する", class: "btn btn-default"
