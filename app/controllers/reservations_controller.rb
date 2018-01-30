@@ -1,8 +1,5 @@
 class ReservationsController < ApplicationController
-
-  def show
-    @reservation = Reservation.new(current_user)
-  end
+  before_action :authenticate_user!
 
   def create
     timesheet = Timesheet.find(params[:timesheet_id])
@@ -11,7 +8,7 @@ class ReservationsController < ApplicationController
       user: current_user, timesheet: timesheet)
     workflow.run
     if workflow.success
-      redirect_to reservation_path
+      redirect_to current_user
     else
       redirect_to timesheets_path
     end
