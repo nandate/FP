@@ -3,7 +3,15 @@ h1 = @user.name
 
 - if current_user.fp?
   =link_to "予定枠の作成", new_timesheet_path
-  
+  h1 投稿した予約一覧
+  - @user.timesheets.each do |timesheet|
+    .panel.panel-default
+      h3 =timesheet.start_time
+      - unless timesheet.ticket.nil?
+        h3 予約者:#{timesheet.ticket.user.name}
+        h3 ステータス:#{timesheet.ticket.status}
+      - else
+        h3 未予約
 
 - else
   =link_to "予定枠一覧", timesheets_path
