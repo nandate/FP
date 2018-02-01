@@ -10,7 +10,12 @@ h1 = @user.name
         h3 =timesheet.start_time
         - unless timesheet.ticket.nil?
           h3 予約者:#{timesheet.ticket.user.name}
-          h3 ステータス:#{timesheet.ticket.status}
+          - if timesheet.ticket.waiting?
+            = form_tag ticket_path, method: :patch do
+              = hidden_field_tag "timesheet_id", timesheet.id
+              = submit_tag "承認する", class: "btn btn-default"
+          - else
+            h3 承認済み
         - else
           h3 未予約
 
@@ -24,7 +29,7 @@ h1 = @user.name
         h3 =reservation.start_time
         h3 =reservation.user.name
 
-  h1 承認済みの予約
+  h1 承認された予約
   - @user.approved_reservations.each do |reservation|
     .panel.panel-default
       .container
