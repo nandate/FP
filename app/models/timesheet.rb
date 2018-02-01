@@ -3,7 +3,7 @@ class Timesheet < ApplicationRecord
   has_one :ticket
   validates :start_time, presence: true
   validate :validate_past, if: :past_time?
-  validate :start_time_valid?
+  validate :validate_start_time
 
   def past_time?
     start_time < Time.now
@@ -13,7 +13,7 @@ class Timesheet < ApplicationRecord
     errors.add(:start_time, ":過去の日付は使用できません。")
   end
 
-  def start_time_valid?
+  def validate_start_time
     case start_time.wday
     when 0
       errors.add(:start_time,":日曜日は作成できません。")
