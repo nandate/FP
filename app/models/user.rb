@@ -9,7 +9,7 @@ class User < ApplicationRecord
   has_many :tickets
 
   def waiting_tickets
-    tickets.waiting.all.to_a
+    tickets.waiting.includes(:timesheet)
   end
 
   def approved_tickets
@@ -17,7 +17,7 @@ class User < ApplicationRecord
   end
 
   def waiting_reservations
-    waiting_tickets.map(&:timesheet).uniq.sort_by(&:start_time)
+    waiting_tickets.map(&:timesheet)
   end
 
   def approved_reservations
