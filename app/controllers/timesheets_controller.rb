@@ -1,7 +1,7 @@
 class TimesheetsController < ApplicationController
   before_action :fp_user, only: [:new, :create]
   def index
-    @timesheets = Timesheet.all
+    @timesheets = Timesheet.includes(:user).all
   end
 
   def new
