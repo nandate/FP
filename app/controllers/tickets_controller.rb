@@ -14,6 +14,4 @@ class TicketsController < ApplicationController
     end
   end
 
-
-
 end

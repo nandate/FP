@@ -24,5 +24,4 @@ class User < ApplicationRecord
     approved_tickets.map(&:timesheet).uniq.sort_by(&:start_time)
   end
 
-
 end
