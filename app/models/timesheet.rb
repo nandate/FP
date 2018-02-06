@@ -2,7 +2,7 @@ class Timesheet < ApplicationRecord
   belongs_to :user
   has_one :ticket
   validates :start_time, presence: true
-  validates :user, presence:true
+  validates :user, presence: true
   validate :validate_past, if: :past_time?
   validate :validate_start_time
 
@@ -18,7 +18,7 @@ class Timesheet < ApplicationRecord
     def validate_start_time
       case start_time.wday
       when 0
-        errors.add(:start_time,":日曜日は作成できません。")
+        errors.add(:start_time, ":日曜日は作成できません。")
       when 6
         errors.add(:start_time, ":土曜日は11:00~15:00のみ作成できます。") if start_time.hour < 11 || start_time.hour > 15
       else
