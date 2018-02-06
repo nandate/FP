@@ -8,7 +8,7 @@ class Timesheet < ApplicationRecord
 
   private
     def past_time?
-      start_time < Time.now
+      start_time < Time.zone.now
     end
 
     def validate_past
