@@ -5,6 +5,7 @@ class Timesheet < ApplicationRecord
   validates :user, presence: true
   validate :validate_past, if: :past_time?
   validate :validate_start_time
+  validate :validate_double_book
 
   private
     def past_time?
@@ -13,6 +14,13 @@ class Timesheet < ApplicationRecord
 
     def validate_past
       errors.add(:start_time, ":過去の日付は使用できません。")
+    end
+
+    def validate_double_book
+      timesheet = Timesheet.where(user_id: user_id).where(start_time: start_time)
+      if timesheet.any?
+        errors.add(:start_time, ":この時間にはすでに予約が作成されています。")
+      end
     end
 
     def validate_start_time
