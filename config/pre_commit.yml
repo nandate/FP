@@ -1,0 +1,6 @@
+---
+:coffelint_remove: []
+:coffelint_add:
+- :rubocop
+- :scss_lint
+- :whitespace

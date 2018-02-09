@@ -1,22 +1,21 @@
 class TicketsController < ApplicationController
   before_action :authenticate_user!
+  before_action :load_timesheet, only: [:create, :update]
 
   def create
-    timesheet = Timesheet.find(params[:timesheet_id])
-    return unless timesheet.ticket.nil?
-    workflow = CreateReservation.new(
-      user: current_user, timesheet: timesheet)
-    workflow.run
-    if workflow.success
-      flash[:success] = "予約しました。"
+    return unless @timesheet.ticket.nil?
+    create_reservation = CreateReservation.new(
+      user: current_user, timesheet: @timesheet)
+    if create_reservation.run
+      flash[:success] = "正常に予約できました。"
       redirect_to current_user
     else
+      flash[:danger] = "正常に予約ができませんでした。"
       redirect_to timesheets_path
     end
   end
 
   def update
-    timesheet = Timesheet.find(params[:timesheet_id])
     workflow = ApproveReservation.new(timesheet: timesheet)
     workflow.run
     if workflow.success
@@ -27,4 +26,9 @@ class TicketsController < ApplicationController
     end
   end
 
+  private
+    def load_timesheet
+      @timesheet = Timesheet.find(params[:timesheet_id])
+    end
+  
 end
