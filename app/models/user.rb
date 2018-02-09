@@ -10,12 +10,11 @@ class User < ApplicationRecord
   has_many :applied_timesheets, through: :tickets, source: 'timesheet'
 
   def waiting_reservations
-    applied_timesheets
-    #waiting_tickets.map(&:timesheet)
+    applied_timesheets.waiting
   end
 
   def approved_reservations
-    approved_tickets.map(&:timesheet)
+    applied_timesheets.approved
   end
 
 end
