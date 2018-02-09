@@ -38,5 +38,4 @@ class Timesheet < ApplicationRecord
       end
     end
 
-
 end
