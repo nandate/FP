@@ -16,7 +16,7 @@ class TicketsController < ApplicationController
   end
 
   def update
-    workflow = ApproveReservation.new(timesheet: timesheet)
+    approve_reservation = ApproveReservation.new(timesheet: @timesheet)
     workflow.run
     if workflow.success
       flash[:success] = "予約を承認しました。"
@@ -30,5 +30,5 @@ class TicketsController < ApplicationController
     def load_timesheet
       @timesheet = Timesheet.find(params[:timesheet_id])
     end
-  
+
 end
