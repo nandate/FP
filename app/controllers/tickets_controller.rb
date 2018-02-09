@@ -4,10 +4,10 @@ class TicketsController < ApplicationController
 
   def create
     return unless @timesheet.ticket.nil?
-    workflow = CreateReservation.new(
+    create_reservation = CreateReservation.new(
       user: current_user, timesheet: @timesheet)
-    workflow.run
-    if workflow.success
+    create_reservation.run
+    if create_reservation.success
       redirect_to current_user
     else
       redirect_to timesheets_path
