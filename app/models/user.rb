@@ -7,17 +7,11 @@ class User < ApplicationRecord
   enum role: {user: 0, fp: 1}
   has_many :timesheets
   has_many :tickets
-
-  def waiting_tickets
-    tickets.waiting.includes(:timesheet)
-  end
-
-  def approved_tickets
-    tickets.approved.includes(:timesheet)
-  end
+  has_many :applied_timesheets, through: :tickets, source: 'timesheet'
 
   def waiting_reservations
-    waiting_tickets.map(&:timesheet)
+    applied_timesheets
+    #waiting_tickets.map(&:timesheet)
   end
 
   def approved_reservations
