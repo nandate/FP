@@ -1,9 +1,8 @@
 class ApproveReservation
-  attr_reader :timesheet, :success
+  attr_reader :timesheet
 
-  def initialize(user:, timesheet: )
+  def initialize(timesheet: )
     @timesheet = timesheet
-    @success = false
   end
 
   def run
@@ -11,8 +10,6 @@ class ApproveReservation
       ticket = timesheet.ticket
       return unless ticket.waiting?
       ticket.update(status: :approved)
-      self.success = ticket.valid?
-      success
     end
   end
 
