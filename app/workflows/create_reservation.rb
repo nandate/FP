@@ -1,5 +1,5 @@
 class CreateReservation
-  attr_accessor :user, :timesheet
+  attr_reader :user, :timesheet
 
   def initialize(user:, timesheet: )
     @user = user
