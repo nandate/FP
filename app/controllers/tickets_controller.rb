@@ -21,7 +21,8 @@ class TicketsController < ApplicationController
       flash[:success] = "予約を承認しました。"
       redirect_to current_user
     else
-      redirect_to root_path
+      flash[:danger] = "予約の承認に失敗しました。"
+      redirect_to current_user
     end
   end
 
