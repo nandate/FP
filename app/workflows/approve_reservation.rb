@@ -1,5 +1,5 @@
 class ApproveReservation
-  attr_accessor :timesheet, :success
+  attr_reader :timesheet, :success
 
   def initialize(user:, timesheet: )
     @timesheet = timesheet
