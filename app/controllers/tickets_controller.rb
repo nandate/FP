@@ -7,8 +7,10 @@ class TicketsController < ApplicationController
     create_reservation = CreateReservation.new(
       user: current_user, timesheet: @timesheet)
     if create_reservation.run
+      flash[:success] = "正常に予約できました。"
       redirect_to current_user
     else
+      flash[:danger] = "正常に予約ができませんでした。"
       redirect_to timesheets_path
     end
   end
