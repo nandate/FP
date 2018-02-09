@@ -17,8 +17,7 @@ class TicketsController < ApplicationController
 
   def update
     approve_reservation = ApproveReservation.new(timesheet: @timesheet)
-    workflow.run
-    if workflow.success
+    if approve_reservation.run
       flash[:success] = "予約を承認しました。"
       redirect_to current_user
     else
