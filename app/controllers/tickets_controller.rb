@@ -6,8 +6,7 @@ class TicketsController < ApplicationController
     return unless @timesheet.ticket.nil?
     create_reservation = CreateReservation.new(
       user: current_user, timesheet: @timesheet)
-    create_reservation.run
-    if create_reservation.success
+    if create_reservation.run
       redirect_to current_user
     else
       redirect_to timesheets_path
