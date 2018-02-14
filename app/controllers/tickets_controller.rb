@@ -5,7 +5,9 @@ class TicketsController < ApplicationController
   def create
     return unless @timesheet.ticket.nil?
     create_reservation = CreateReservation.new(
-      user: current_user, timesheet: @timesheet)
+      user: current_user,
+      timesheet: @timesheet
+    )
     if create_reservation.run
       flash[:success] = "正常に予約できました。"
       redirect_to current_user
