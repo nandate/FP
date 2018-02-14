@@ -1,4 +1,9 @@
 h1 All TimeSheets
 - @timesheets.each do |timesheet|
-  h2= timesheet.start_time
-  h2= timesheet.user_id
+  .panel.panel-default
+    .container
+      h3 開始時刻:#{timesheet.start_time}
+      h3 ファイナンシャルプランナー:#{timesheet.user.name}
+      = form_tag tickets_path, method: :create do
+        = hidden_field_tag "timesheet_id", timesheet.id
+        = submit_tag "予約する", class: "btn btn-default"
