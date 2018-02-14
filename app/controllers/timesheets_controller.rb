@@ -1,5 +1,5 @@
 class TimesheetsController < ApplicationController
-  before_action :fp_user, only: [:new, :create]
+  before_action :fp_user, only: [:new, :create, :destroy]
   before_action :correct_user, only: :destroy
 
   def index
