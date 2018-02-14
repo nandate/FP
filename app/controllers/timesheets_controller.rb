@@ -19,6 +19,12 @@ class TimesheetsController < ApplicationController
     end
   end
 
+  def destroy
+    @timesheet.destroy
+    flash[:success] = "Timesheetの削除に成功しました。"
+    redirect_to request.referrer || root_url
+  end
+
   private
     def timesheet_params
       params.require(:timesheet).permit(:start_time)
