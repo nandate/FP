@@ -3,7 +3,7 @@ class TimesheetsController < ApplicationController
   before_action :correct_user, only: :destroy
 
   def index
-    @timesheets = Timesheet.all
+    @timesheets = Timesheet.includes(:user).all
   end
 
   def new

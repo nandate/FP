@@ -30,5 +30,4 @@ class TicketsController < ApplicationController
     def load_timesheet
       @timesheet = Timesheet.find(params[:timesheet_id])
     end
-
 end

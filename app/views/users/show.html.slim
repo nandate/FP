@@ -2,7 +2,6 @@ h1 = @user.email
 h1 = @user.name
 
 - if current_user.fp?
-  =link_to "予定枠の作成", new_timesheet_path
   h1 投稿した予約一覧
   - @user.timesheets.each do |timesheet|
     .panel.panel-default
@@ -18,10 +17,7 @@ h1 = @user.name
             h3 承認済み
         - else
           h3 未予約
-
 - else
-  =link_to "予定枠一覧", timesheets_path
-
   h1 承認待ちの予約
   - @user.waiting_reservations.each do |reservation|
     .panel.panel-default
