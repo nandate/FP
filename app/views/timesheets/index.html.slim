@@ -7,4 +7,5 @@ h1 All TimeSheets
       = form_tag tickets_path, method: :create do
         = hidden_field_tag "timesheet_id", timesheet.id
         = submit_tag "予約する", class: "btn btn-default"
-        = link_to "削除", timesheet, method: :delete
+        - if current_user == timesheet.user
+          = link_to "削除", timesheet, method: :delete
