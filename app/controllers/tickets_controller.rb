@@ -1,6 +1,7 @@
 class TicketsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_timesheet, only: [:create, :update]
+  before_action :correct_user, only: [:destroy]
 
   def create
     return unless @timesheet.ticket.nil?
@@ -29,8 +30,7 @@ class TicketsController < ApplicationController
   end
 
   def destroy
-    ticket = Ticket.find(params[:ticket_id])
-    ticket.destroy
+    @ticket.destroy
     flash[:success] = "予約をキャンセルしました。"
     redirect_to current_user
   end
@@ -39,4 +39,10 @@ class TicketsController < ApplicationController
     def load_timesheet
       @timesheet = Timesheet.find(params[:timesheet_id])
     end
+
+    def correct_user
+      @ticket = current_user.tickets.find(params[:ticket_id])
+      redirect_to root_url if @ticket.nil?
+    end
+
 end
