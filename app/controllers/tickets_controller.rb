@@ -26,6 +26,13 @@ class TicketsController < ApplicationController
     end
   end
 
+  def destroy
+    ticket = Ticket.find(params[:ticket_id])
+    ticket.destroy
+    flash[:success] = "予約をキャンセルしました。"
+    redirect_to current_user
+  end
+
   private
     def load_timesheet
       @timesheet = Timesheet.find(params[:timesheet_id])
