@@ -21,7 +21,9 @@ class TimesheetsController < ApplicationController
 
   def destroy
     @timesheet.destroy
-    redirect_to request.referrer || root_url, success: "Timesheetの削除に成功しました。"
+    redirect_to request.referrer, success: "Timesheetの削除に成功しました。"
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_url, danger: "Timesheetが見つかりません。"
   end
 
   private
