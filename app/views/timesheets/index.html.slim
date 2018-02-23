@@ -8,4 +8,4 @@ h1 All TimeSheets
         = hidden_field_tag "timesheet_id", timesheet.id
         = submit_tag "予約する", class: "btn btn-default"
         - if current_user == timesheet.user
-          = link_to "削除", timesheet, method: :delete
+          = link_to "削除", timesheet, method: :delete, data: { confirm: '本当に削除しますか？' }
