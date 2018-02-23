@@ -1,7 +1,7 @@
 class ApproveReservation
   attr_reader :timesheet
 
-  def initialize(timesheet: )
+  def initialize(timesheet:)
     @timesheet = timesheet
   end
 
