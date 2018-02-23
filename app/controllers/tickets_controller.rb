@@ -40,7 +40,7 @@ class TicketsController < ApplicationController
     end
 
     def correct_user
-      @ticket = current_user.tickets.find(params[:ticket_id])
+      @ticket = current_user.tickets.find(params[:id])
       redirect_to root_url if @ticket.nil?
     end
 
