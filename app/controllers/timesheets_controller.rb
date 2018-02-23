@@ -1,6 +1,6 @@
 class TimesheetsController < ApplicationController
   before_action :fp_user, only: [:new, :create, :destroy]
-  before_action :correct_user, only: :destroy
+  before_action :set_timesheet, only: :destroy
 
   def index
     @timesheets = Timesheet.includes(:user).all
@@ -33,9 +33,8 @@ class TimesheetsController < ApplicationController
       redirect_to root_url unless current_user.fp?
     end
 
-    def correct_user
-      @timesheet = current_user.timesheets.find_by(id: params[:id])
-      redirect_to root_url if @timesheet.nil?
+    def set_timesheet
+      @timesheet = current_user.timesheet.find(params[:id])
     end
 
 end
