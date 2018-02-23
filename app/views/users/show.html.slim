@@ -24,9 +24,8 @@ h1 = @user.name
       .container
         h3 = reservation.start_time
         h3 = reservation.user.name
-        = form_tag ticket_path, method: :delete do
-          = hidden_field_tag "ticket_id", reservation.ticket.id
-          = submit_tag "キャンセルする", class: "btn btn-default"
+        = form_for reservation.ticket, method: :delete do |f|
+          = f.submit "キャンセルする", class: "btn btn-default", data: { confirm: "本当にキャンセルしますか？" }
 
 
   h1 承認された予約
