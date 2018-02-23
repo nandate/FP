@@ -6,11 +6,9 @@ class ApproveReservation
   end
 
   def run
-    Ticket.transaction do
-      ticket = timesheet.ticket
-      return unless ticket.waiting?
-      ticket.update(status: :approved)
-    end
+    ticket = timesheet.ticket
+    return unless ticket.waiting?
+    ticket.approved!
   end
 
 end
