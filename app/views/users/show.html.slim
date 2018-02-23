@@ -27,6 +27,11 @@ h1 = @user.name
         h3 = reservation.start_time
         h3 = reservation.user.name
 
+        = form_for reservation.ticket, method: :delete do |f|
+          = f.submit "キャンセルする", class: "btn btn-default", data: { confirm: "本当にキャンセルしますか？" }
+
+
+
   h1 承認された予約
   - @user.approved_reservations.each do |reservation|
     .panel.panel-default
