@@ -21,8 +21,7 @@ class TimesheetsController < ApplicationController
 
   def destroy
     @timesheet.destroy
-    flash[:success] = "Timesheetの削除に成功しました。"
-    redirect_to request.referrer || root_url
+    redirect_to request.referrer || root_url, success: "Timesheetの削除に成功しました。"
   end
 
   private
