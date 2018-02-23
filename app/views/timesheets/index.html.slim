@@ -5,7 +5,7 @@ h1 All TimeSheets
       h3 開始時刻:#{timesheet.start_time}
       h3 ファイナンシャルプランナー:#{timesheet.user.name}
       - if timesheet.ticket.nil?
-        = form_tag tickets_path, method: :create do
+        = form_tag tickets_path do
           = hidden_field_tag "timesheet_id", timesheet.id
           = submit_tag "予約する", class: "btn btn-default"
       - else
