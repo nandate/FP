@@ -1,5 +1,5 @@
 class TimesheetsController < ApplicationController
-  before_action :fp_user, only: [:new, :create, :destroy]
+  before_action :fp_user, only: %i(new create destroy)
   before_action :set_timesheet, only: :destroy
 
   def index
@@ -21,22 +21,22 @@ class TimesheetsController < ApplicationController
 
   def destroy
     @timesheet.destroy
-    redirect_to request.referrer, success: "Timesheetの削除に成功しました。"
+    redirect_to request.referer, success: "Timesheetの削除に成功しました。"
   rescue ActiveRecord::RecordNotFound
     redirect_to root_url, danger: "Timesheetが見つかりません。"
   end
 
   private
-    def timesheet_params
-      params.require(:timesheet).permit(:start_time)
-    end
 
-    def fp_user
-      redirect_to root_url unless current_user.fp?
-    end
+  def timesheet_params
+    params.require(:timesheet).permit(:start_time)
+  end
 
-    def set_timesheet
-      @timesheet = current_user.timesheet.find(params[:id])
-    end
+  def fp_user
+    redirect_to root_url unless current_user.fp?
+  end
 
+  def set_timesheet
+    @timesheet = current_user.timesheet.find(params[:id])
+  end
 end
