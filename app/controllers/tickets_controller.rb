@@ -9,11 +9,9 @@ class TicketsController < ApplicationController
       timesheet: @timesheet
     )
     create_reservation.run!
-    flash[:success] = "予約に成功しました。"
-    redirect_to current_user
+    redirect_to current_user, success: "予約に成功しました。"
   rescue ActiveRecord::RecordInvalid => e
-    flash[:danger] = "予約に失敗しました。#{e.record.errors}"
-    redirect_to timesheets_path
+    redirect_to timesheets_path, danger: "予約に失敗しました。#{e.record.errors}"
   end
 
   def update
