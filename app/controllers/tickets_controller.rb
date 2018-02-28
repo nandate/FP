@@ -11,7 +11,7 @@ class TicketsController < ApplicationController
     create_reservation.run!
     redirect_to current_user, success: "予約に成功しました。"
   rescue ActiveRecord::RecordInvalid => e
-    redirect_to timesheets_path, danger: "予約に失敗しました。#{e.record.errors}"
+    redirect_to timesheets_path, danger: "予約に失敗しました。#{e.record.errors.join(',')}"
   end
 
   def update
