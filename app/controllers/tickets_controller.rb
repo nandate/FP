@@ -24,8 +24,10 @@ class TicketsController < ApplicationController
   end
 
   def destroy
-    @ticket.destroy
+    @ticket.destroy!
     redirect_to current_user, success: "予約をキャンセルしました。"
+  rescue ActiveRecord::RecordNotDestroyed
+    redirect_to root_url, danger: "予約のキャンセルに失敗しました。"
   end
 
   private
