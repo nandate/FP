@@ -38,5 +38,7 @@ class TimesheetsController < ApplicationController
 
   def set_timesheet
     @timesheet = current_user.timesheet.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_url, danger: "Timesheetが見つかりません。"
   end
 end
