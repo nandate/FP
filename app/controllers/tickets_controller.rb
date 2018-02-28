@@ -36,6 +36,7 @@ class TicketsController < ApplicationController
 
   def correct_user
     @ticket = current_user.tickets.find(params[:id])
-    redirect_to root_url if @ticket.nil?
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_url, danger: "Ticketが見つかりませんでした。"
   end
 end
