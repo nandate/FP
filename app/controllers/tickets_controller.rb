@@ -1,5 +1,4 @@
 class TicketsController < ApplicationController
-  before_action :authenticate_user!
   before_action :load_timesheet, only: %i(create update)
   before_action :correct_user, only: %i(destroy)
 
