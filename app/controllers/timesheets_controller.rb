@@ -3,7 +3,7 @@ class TimesheetsController < ApplicationController
   before_action :set_timesheet, only: %i(destroy)
 
   def index
-    @timesheets = Timesheet.includes(:user).all
+    @timesheets = Timesheet.includes(:user).all.order_by_start_time
   end
 
   def new

@@ -6,6 +6,7 @@ class Timesheet < ApplicationRecord
   validate :validate_past, if: :past_time?
   validate :validate_start_time
   validate :validate_double_book
+  scope :order_by_start_time, -> { order(:start_time) }
   scope :waiting, -> { joins(:tickets).merge(Ticket.waiting) }
   scope :approved, -> { joins(:tickets).merge(Ticket.approved) }
 
