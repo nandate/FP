@@ -13,7 +13,7 @@ class TimesheetsController < ApplicationController
   def create
     @timesheet = current_user.timesheets.build(timesheet_params)
     if @timesheet.save
-      redirect_to timesheets_path, flash: { success: "Timesheetを作成しました。" }
+      redirect_to timesheets_path, success: "Timesheetを作成しました。"
     else
       render :new
     end
@@ -21,9 +21,9 @@ class TimesheetsController < ApplicationController
 
   def destroy
     @timesheet.destroy!
-    redirect_to request.referer, flash: { success: "Timesheetの削除に成功しました。" }
+    redirect_to request.referer, success: "Timesheetの削除に成功しました。"
   rescue ActiveRecord::RecordNotDestroyed
-    redirect_to root_url, flash: { danger: "Timesheetの削除に失敗しました。" }
+    redirect_to root_url, danger: "Timesheetの削除に失敗しました。"
   end
 
   private
@@ -39,6 +39,6 @@ class TimesheetsController < ApplicationController
   def set_timesheet
     @timesheet = current_user.timesheets.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    redirect_to root_url, flash: { danger: "Timesheetが見つかりません。" }
+    redirect_to root_url, danger: "Timesheetが見つかりません。"
   end
 end
