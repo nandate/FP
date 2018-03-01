@@ -1,6 +1,6 @@
 class TimesheetsController < ApplicationController
   before_action :fp_user, only: %i(new create destroy)
-  before_action :set_timesheet, only: :destroy
+  before_action :set_timesheet, only: %i(destroy)
 
   def index
     @timesheets = Timesheet.includes(:user).all
