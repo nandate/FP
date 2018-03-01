@@ -6,6 +6,8 @@ class Ticket < ApplicationRecord
   validate :validate_duplicate_request
   enum status: { waiting: 0, approved: 1 }
 
+  private
+
   def validate_duplicate_request
     ticket = user.applied_timesheets.where(start_time: timesheet.start_time)
     if ticket.any?
