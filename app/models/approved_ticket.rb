@@ -1,0 +1,2 @@
+class ApprovedTicket < ApplicationRecord
+end
