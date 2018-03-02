@@ -1,2 +1,3 @@
 - @timesheet.tickets.each do |ticket|
   = ticket.user.name
+  = link_to "承認する", approved_tickets_path, method: :post
