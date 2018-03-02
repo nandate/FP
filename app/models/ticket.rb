@@ -4,7 +4,6 @@ class Ticket < ApplicationRecord
   validates :user, presence: true
   validates :timesheet, presence: true
   validate :validate_duplicate_request
-  enum status: { waiting: 0, approved: 1 }
 
   private
 
