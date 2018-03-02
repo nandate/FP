@@ -5,6 +5,6 @@ Rails.application.routes.draw do
   resources :users, only: %i(show)
 
   resources :timesheets, only: %i(new index create destroy show)
-  resources :tickets, only: %i(create update destroy)
-
+  resources :tickets, only: %i(create destroy)
+  resources :approved_ticket, only: %i(create destroy)
 end
