@@ -1,6 +1,7 @@
 class Timesheet < ApplicationRecord
   belongs_to :user
   has_many :tickets
+  has_one :approved_ticket
   validates :start_time, presence: true
   validates :user, presence: true
   validate :validate_past, if: :past_time?
