@@ -1,0 +1,5 @@
+- @timesheet.tickets.each do |ticket|
+  = ticket.user.name
+  = form_for current_user.approved_tickets.build do |f|
+    = hidden_field_tag "timesheet_id", @timesheet.id
+    = f.submit "承認する"
