@@ -3,7 +3,7 @@ class Timesheet < ApplicationRecord
   has_many :tickets
   validates :start_time, presence: true
   validates :user, presence: true
-  validate :validate_past, if: :past_time?
+  validate :validate_past
   validate :validate_start_time
   validate :validate_time_step
   validate :validate_double_book
@@ -17,12 +17,10 @@ class Timesheet < ApplicationRecord
 
   private
 
-  def past_time?
-    start_time < Time.zone.now
-  end
-
   def validate_past
-    errors.add(:start_time, ":過去の日付は使用できません。")
+    if start_time < Time.zone.now
+      errors.add(:start_time, ":過去の日付は使用できません。")
+    end
   end
 
   def validate_time_step
