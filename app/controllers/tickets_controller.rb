@@ -1,7 +1,7 @@
 class TicketsController < ApplicationController
   before_action :load_timesheet, only: %i(create update)
   before_action :correct_user, only: %i(destroy)
-  before_action :normal_user
+  before_action :permit_only_normal_user!
 
   def create
     current_user.tickets.create!(timesheet: @timesheet)
@@ -32,7 +32,7 @@ class TicketsController < ApplicationController
     @timesheet = Timesheet.find(params[:timesheet_id])
   end
 
-  def normal_user
+  def permit_only_normal_user!
     redirect_to root_url unless current_user.user?
   end
 

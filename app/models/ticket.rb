@@ -9,8 +9,7 @@ class Ticket < ApplicationRecord
   private
 
   def validate_duplicate_request
-    ticket = user.applied_timesheets.where(start_time: timesheet.start_time)
-    if ticket.any?
+    if user.applied_timesheets.where(start_time: timesheet.start_time).any?
       errors.add(:base, "すでに予約申請中です。")
     end
   end

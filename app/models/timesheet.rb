@@ -4,7 +4,7 @@ class Timesheet < ApplicationRecord
   has_one :approved_ticket
   validates :start_time, presence: true
   validates :user, presence: true
-  validate :validate_past, if: :past_time?
+  validate :validate_past
   validate :validate_start_time
   validate :validate_time_step
   validate :validate_double_book
@@ -14,16 +14,14 @@ class Timesheet < ApplicationRecord
 
   TIMES = ["10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00",
            "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",
-           "17:00", "17:30"]
+           "17:00", "17:30"].freeze
 
   private
 
-  def past_time?
-    start_time < Time.zone.now
-  end
-
   def validate_past
-    errors.add(:start_time, ":過去の日付は使用できません。")
+    if start_time < Time.zone.now
+      errors.add(:start_time, ":過去の日付は使用できません。")
+    end
   end
 
   def validate_time_step
