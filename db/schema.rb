@@ -13,12 +13,10 @@
 ActiveRecord::Schema.define(version: 20180302094040) do
 
   create_table "approved_tickets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.bigint "user_id"
     t.bigint "timesheet_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["timesheet_id"], name: "index_approved_tickets_on_timesheet_id", unique: true
-    t.index ["user_id"], name: "index_approved_tickets_on_user_id"
   end
 
   create_table "tickets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -58,7 +56,6 @@ ActiveRecord::Schema.define(version: 20180302094040) do
   end
 
   add_foreign_key "approved_tickets", "timesheets"
-  add_foreign_key "approved_tickets", "users"
   add_foreign_key "tickets", "timesheets"
   add_foreign_key "tickets", "users"
   add_foreign_key "timesheets", "users"
