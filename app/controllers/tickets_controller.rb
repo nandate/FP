@@ -1,5 +1,5 @@
 class TicketsController < ApplicationController
-  before_action :load_timesheet, only: %i(create update)
+  before_action :load_timesheet, only: %i(create)
   before_action :correct_user, only: %i(destroy)
   before_action :permit_only_normal_user!
 
@@ -8,15 +8,6 @@ class TicketsController < ApplicationController
     redirect_to current_user, success: "予約に成功しました。"
   rescue ActiveRecord::RecordInvalid => e
     redirect_to timesheets_path, danger: "予約に失敗しました。#{e.record.errors.join(',')}"
-  end
-
-  def update
-    approve_reservation = ApproveReservation.new(timesheet: @timesheet)
-    if approve_reservation.run
-      redirect_to current_user, success: "予約を承認しました。"
-    else
-      redirect_to current_user, danger: "予約の承認に失敗しました。"
-    end
   end
 
   def destroy
