@@ -20,5 +20,9 @@ h1 = @user.name
       .container
         h3 = ticket.timesheet.start_time
         h3 = ticket.timesheet.user.name
+        - if ticket.timesheet.approved_ticket.nil?
+          h3 未承認
+        - else
+          h3 承認済み
         = form_for ticket, method: :delete do |f|
           = f.submit "キャンセルする", class: "btn btn-default", data: { confirm: "本当にキャンセルしますか？" }
