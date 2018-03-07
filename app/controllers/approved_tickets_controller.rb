@@ -12,5 +12,7 @@ class ApprovedTicketsController < ApplicationController
 
   def load_timesheet
     @timesheet = current_user.timesheets.find(params[:timesheet_id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_url, danger: "Timesheetが見つかりません。"
   end
 end
