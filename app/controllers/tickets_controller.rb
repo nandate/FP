@@ -4,7 +4,7 @@ class TicketsController < ApplicationController
   before_action :normal_user
 
   def create
-    current_user.tickets.create!(timesheet: @timesheet, status: "waiting")
+    current_user.tickets.create!(timesheet: @timesheet)
     redirect_to current_user, success: "予約に成功しました。"
   rescue ActiveRecord::RecordInvalid => e
     redirect_to timesheets_path, danger: "予約に失敗しました。#{e.record.errors.join(',')}"
