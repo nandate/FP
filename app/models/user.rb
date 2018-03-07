@@ -7,9 +7,7 @@ class User < ApplicationRecord
   enum role: { user: 0, fp: 1 }
   has_many :timesheets
   has_many :tickets
-  has_many :approved_tickets
   has_many :applied_timesheets, through: :tickets, source: 'timesheet'
-  has_many :approved_timesheets, through: :approved_tickets, source: "timesheet"
 
   def waiting_reservations
     applied_timesheets.waiting
