@@ -4,3 +4,6 @@
 - :rubocop
 - :scss_lint
 - :whitespace
+:checks_remove: []
+:checks_add:
+- :rubocop
