@@ -17,8 +17,7 @@ ActiveRecord::Schema.define(version: 20180302094040) do
     t.bigint "timesheet_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["timesheet_id"], name: "index_approved_tickets_on_timesheet_id"
-    t.index ["user_id", "timesheet_id"], name: "index_approved_tickets_on_user_id_and_timesheet_id", unique: true
+    t.index ["timesheet_id"], name: "index_approved_tickets_on_timesheet_id", unique: true
     t.index ["user_id"], name: "index_approved_tickets_on_user_id"
   end
 
