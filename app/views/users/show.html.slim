@@ -1,2 +1,32 @@
 h1 = @user.email
-h1 = @user.role
+h1 = @user.name
+
+- if current_user.fp?
+  = link_to "予定枠の作成", new_timesheet_path
+  h1 投稿した予約一覧
+  - @user.timesheets.each do |timesheet|
+    .panel.panel-default
+      .container
+        h3 = timesheet.start_time
+        - unless timesheet.ticket.nil?
+          h3 予約者:#{timesheet.ticket.user.name}
+          h3 ステータス:#{timesheet.ticket.status}
+        - else
+          h3 未予約
+
+- else
+  = link_to "予定枠一覧", timesheets_path
+
+  h1 承認待ちの予約
+  - @user.waiting_reservations.each do |reservation|
+    .panel.panel-default
+      .container
+        h3 = reservation.start_time
+        h3 = reservation.user.name
+
+  h1 承認済みの予約
+  - @user.approved_reservations.each do |reservation|
+    .panel.panel-default
+      .container
+        h3 = reservation.start_time
+        h3 = reservation.user.name
