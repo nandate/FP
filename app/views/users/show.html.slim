@@ -2,11 +2,12 @@ h1 = @user.email
 h1 = @user.name
 
 - if current_user.fp?
+
   h1 投稿した予約一覧
   - @user.timesheets.each do |timesheet|
     .panel.panel-default
       .container
-        h3 =timesheet.start_time
+        h3 = timesheet.start_time
         - unless timesheet.ticket.nil?
           h3 予約者:#{timesheet.ticket.user.name}
           - if timesheet.ticket.waiting?
@@ -18,16 +19,22 @@ h1 = @user.name
         - else
           h3 未予約
 - else
+
   h1 承認待ちの予約
   - @user.waiting_reservations.each do |reservation|
     .panel.panel-default
       .container
-        h3 =reservation.start_time
-        h3 =reservation.user.name
+        h3 = reservation.start_time
+        h3 = reservation.user.name
+
+        = form_for reservation.ticket, method: :delete do |f|
+          = f.submit "キャンセルする", class: "btn btn-default", data: { confirm: "本当にキャンセルしますか？" }
+
+
 
   h1 承認された予約
   - @user.approved_reservations.each do |reservation|
     .panel.panel-default
       .container
-        h3 =reservation.start_time
-        h3 =reservation.user.name
+        h3 = reservation.start_time
+        h3 = reservation.user.name
