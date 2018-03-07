@@ -8,11 +8,12 @@ h1 = @user.name
     .panel.panel-default
       .container
         h3 = timesheet.start_time
-        h3 = timesheet.tickets.size
-        = link_to "予約者一覧", timesheet
-
+        - if timesheet.approved_ticket.nil?
+          h3 = timesheet.tickets.size
+          = link_to "予約者一覧", timesheet
+        - else
+          h3 承認済み
 - else
-
   h1 チケット一覧
   - @tickets.each do |ticket|
     .panel.panel-default
