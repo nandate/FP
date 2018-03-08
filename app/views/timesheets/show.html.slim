@@ -1,3 +1,6 @@
 - @timesheet.tickets.each do |ticket|
   = ticket.user.name
-  = link_to "承認する", timesheet_approved_ticket_path(@timesheet), method: :post
+  - approved_ticket = @timesheet.build_approved_ticket
+  = form_for approved_ticket, url: timesheet_approved_ticket_path(@timesheet) do |f|
+    = hidden_field_tag "ticket_id", ticket.id
+    = f.submit "承認する", class: "btn btn-default"
