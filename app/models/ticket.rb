@@ -3,8 +3,8 @@ class Ticket < ApplicationRecord
   belongs_to :timesheet
   validates :user, presence: true
   validates :timesheet, presence: true
+  has_one :approved_ticket
   validate :validate_duplicate_request
-  enum status: { waiting: 0, approved: 1 }
 
   private
 
