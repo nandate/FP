@@ -24,7 +24,7 @@ class Timesheet < ApplicationRecord
   end
 
   def validate_time_step
-    if TIMES.index(start_time.strftime("%H:%M")).nil?
+    unless TIMES.include?(start_time.strftime("%H:%M"))
       errors.add(:start_time, ":この時刻では作成できません。")
     end
   end
