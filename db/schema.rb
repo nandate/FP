@@ -14,8 +14,10 @@ ActiveRecord::Schema.define(version: 20180302094040) do
 
   create_table "approved_tickets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "timesheet_id"
+    t.bigint "ticket_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["ticket_id"], name: "index_approved_tickets_on_ticket_id", unique: true
     t.index ["timesheet_id"], name: "index_approved_tickets_on_timesheet_id", unique: true
   end
 
@@ -55,6 +57,7 @@ ActiveRecord::Schema.define(version: 20180302094040) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "approved_tickets", "tickets"
   add_foreign_key "approved_tickets", "timesheets"
   add_foreign_key "tickets", "timesheets"
   add_foreign_key "tickets", "users"
