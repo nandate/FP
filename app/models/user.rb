@@ -9,4 +9,5 @@ class User < ApplicationRecord
   has_many :tickets
   has_many :applied_timesheets, through: :tickets, source: 'timesheet'
   validates :name, presence: true
+  validates :role, presence: true
 end

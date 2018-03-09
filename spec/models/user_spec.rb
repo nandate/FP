@@ -1,35 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  it "is valid with a name, email, and password" do
-    user = FactoryBot.build(:user)
-    expect(user).to be_valid
-  end
+  let(:user) { FactoryBot.create(:user) }
 
-  it "is invalid without a name" do
-    user = User.new(name: nil)
-    user.valid?
-    expect(user.errors[:name]).to include("can't be blank")
-  end
+  it { expect(user).to be_valid }
+  it { is_expected.to validate_presence_of(:name) }
+  it { is_expected.to validate_presence_of(:email) }
+  it { is_expected.to validate_presence_of(:role) }
+  it { is_expected.to validate_presence_of(:password) }
 
-  it "is invalid without an email" do
-    user = User.new(email: nil)
-    user.valid?
-    expect(user.errors[:email]).to include("can't be blank")
-  end
-
-  it "is invalid with duplicate email address" do
-    User.create(
-      name: "joe",
-      email: "tester@example.com",
-      password: "password"
-    )
-    user = User.new(
-      name: "jane",
-      email: "tester@example.com",
-      password: "password"
-    )
-    user.valid?
-    expect(user.errors[:email]).to include("has already been taken")
+  describe "is invalid with a duplicate email address" do
+    subject { FactoryBot.build(:user, email: "test@example.com") }
+    it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
   end
 end
