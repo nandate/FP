@@ -2,7 +2,6 @@ h1 = @user.email
 h1 = @user.name
 
 - if current_user.fp?
-
   h1 投稿した予約一覧
   - @timesheets.each do |timesheet|
     .panel.panel-default
@@ -24,5 +23,5 @@ h1 = @user.name
           h3 未承認
         - else
           h3 承認済み
-        = form_for ticket, method: :delete do |f|
+        = form_for [ticket.timesheet, ticket], method: :delete do |f|
           = f.submit "キャンセルする", class: "btn btn-default", data: { confirm: "本当にキャンセルしますか？" }
