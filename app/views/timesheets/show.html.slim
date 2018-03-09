@@ -1,6 +1,5 @@
 - @timesheet.tickets.each do |ticket|
   = ticket.user.name
   - approved_ticket = @timesheet.build_approved_ticket
-  = form_for approved_ticket, url: timesheet_approved_ticket_path(@timesheet) do |f|
-    = hidden_field_tag "ticket_id", ticket.id
+  = form_for approved_ticket, url: timesheet_ticket_approved_ticket_path(@timesheet, ticket) do |f|
     = f.submit "承認する", class: "btn btn-default"

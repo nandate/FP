@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   root to: "visitors#index"
   resources :users, only: %i(show)
   resources :timesheets, only: %i(new index create destroy show) do
-    resource :approved_ticket, only: %i(create)
+    resources :tickets, only: %i(create destroy) do
+      resource :approved_ticket, only: %i(create)
+    end
   end
-  resources :tickets, only: %i(create destroy)
 end
