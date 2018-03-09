@@ -5,8 +5,7 @@ h1 All TimeSheets
       h3 開始時刻:#{timesheet.start_time}
       h3 ファイナンシャルプランナー:#{timesheet.user.name}
       - ticket = timesheet.tickets.build
-      = form_for ticket do
-        = hidden_field_tag "timesheet_id", timesheet.id
+      = form_for [timesheet, ticket] do
         = submit_tag "予約する", class: "btn btn-default"
       - if current_user == timesheet.user
         = link_to "削除", timesheet, method: :delete
