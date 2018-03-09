@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:user) { FactoryBot.create(:user) }
+  let(:user) { create(:user) }
 
   it { expect(user).to be_valid }
   it { is_expected.to validate_presence_of(:name) }
@@ -10,7 +10,7 @@ RSpec.describe User, type: :model do
   it { is_expected.to validate_presence_of(:password) }
 
   describe "is invalid with a duplicate email address" do
-    subject { FactoryBot.build(:user, email: "test@example.com") }
+    subject { build(:user, email: "test@example.com") }
     it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
   end
 end

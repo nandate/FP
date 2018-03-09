@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe UsersController, type: :controller do
   describe "GET #show" do
-    let(:user) { FactoryBot.create(:user) }
+    let(:user) { create(:user) }
 
     it "can get it" do
       sign_in user
