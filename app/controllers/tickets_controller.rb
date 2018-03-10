@@ -1,17 +1,12 @@
 class TicketsController < ApplicationController
-  before_action :authenticate_user!
-  before_action :load_timesheet, only: [:create, :update]
+  before_action :load_timesheet, only: %i(create update)
+  before_action :correct_user, only: %i(destroy)
 
   def create
-    #return unless @timesheet.ticket.nil?
-    create_reservation = CreateReservation.new(
-      user: current_user,
-      timesheet: @timesheet
-    )
-    create_reservation.run!
+    current_user.tickets.create!(timesheet: @timesheet, status: "waiting")
     redirect_to current_user, success: "予約に成功しました。"
   rescue ActiveRecord::RecordInvalid => e
-    redirect_to timesheets_path, danger: "予約に失敗しました。#{e.record.errors}"
+    redirect_to timesheets_path, danger: "予約に失敗しました。#{e.record.errors.join(',')}"
   end
 
   def update

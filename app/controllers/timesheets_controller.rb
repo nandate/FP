@@ -1,5 +1,7 @@
 class TimesheetsController < ApplicationController
-  before_action :fp_user, only: [:new, :create]
+  before_action :fp_user, only: %i(new create destroy)
+  before_action :set_timesheet, only: %i(destroy)
+
   def index
     @timesheets = Timesheet.all
   end
@@ -11,7 +13,7 @@ class TimesheetsController < ApplicationController
   def create
     @timesheet = current_user.timesheets.build(timesheet_params)
     if @timesheet.save
-      redirect_to timesheets_path
+      redirect_to timesheets_path, success: "Timesheetを作成しました。"
     else
       render :new
     end

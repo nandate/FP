@@ -8,7 +8,7 @@ class CreateReservation
 
   def run!
     Ticket.transaction do
-      user.tickets.create!(user: user, timesheet: timesheet, status: "waiting")
+      user.tickets.create!(timesheet: timesheet, status: "waiting")
     end
   end
 
