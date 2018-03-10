@@ -5,27 +5,15 @@ class Timesheet < ApplicationRecord
   validates :user, presence: true
   validate :validate_past
   validate :validate_start_time
-  validate :validate_time_step
   validate :validate_double_book
-  scope :order_by_start_time, -> { order(:start_time) }
   scope :waiting, -> { joins(:tickets).merge(Ticket.waiting) }
   scope :approved, -> { joins(:tickets).merge(Ticket.approved) }
-
-  TIMES = ["10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00",
-           "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",
-           "17:00", "17:30"].freeze
 
   private
 
   def validate_past
     if start_time < Time.zone.now
       errors.add(:start_time, ":過去の日付は使用できません。")
-    end
-  end
-
-  def validate_time_step
-    unless TIMES.include?(start_time.strftime("%H:%M"))
-      errors.add(:start_time, ":この時刻では作成できません。")
     end
   end
 

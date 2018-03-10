@@ -1,9 +1,9 @@
 class TimesheetsController < ApplicationController
-  before_action :permit_only_fp_user!, only: %i(new create destroy)
+  before_action :fp_user, only: %i(new create destroy)
   before_action :set_timesheet, only: %i(destroy)
 
   def index
-    @timesheets = Timesheet.includes(:user).all.order_by_start_time
+    @timesheets = Timesheet.includes(:user).all
   end
 
   def new
@@ -25,7 +25,7 @@ class TimesheetsController < ApplicationController
     params.require(:timesheet).permit(:start_time)
   end
 
-  def permit_only_fp_user!
+  def fp_user
     redirect_to root_url unless current_user.fp?
   end
 end
