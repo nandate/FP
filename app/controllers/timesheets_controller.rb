@@ -19,13 +19,6 @@ class TimesheetsController < ApplicationController
     end
   end
 
-  def destroy
-    @timesheet.destroy!
-    redirect_to request.referer, success: "Timesheetの削除に成功しました。"
-  rescue ActiveRecord::RecordNotDestroyed
-    redirect_to root_url, danger: "Timesheetの削除に失敗しました。"
-  end
-
   private
 
   def timesheet_params
@@ -34,11 +27,5 @@ class TimesheetsController < ApplicationController
 
   def permit_only_fp_user!
     redirect_to root_url unless current_user.fp?
-  end
-
-  def set_timesheet
-    @timesheet = current_user.timesheets.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    redirect_to root_url, danger: "Timesheetが見つかりません。"
   end
 end

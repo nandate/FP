@@ -1,7 +1,7 @@
 class CreateReservation
   attr_reader :user, :timesheet
 
-  def initialize(user:, timesheet:)
+  def initialize(user:, timesheet: )
     @user = user
     @timesheet = timesheet
   end
@@ -11,4 +11,5 @@ class CreateReservation
       user.tickets.create!(timesheet: timesheet, status: "waiting")
     end
   end
+
 end

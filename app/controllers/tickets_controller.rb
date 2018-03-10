@@ -11,19 +11,14 @@ class TicketsController < ApplicationController
   end
 
   def update
-    approve_reservation = ApproveReservation.new(timesheet: @timesheet)
-    if approve_reservation.run
-      redirect_to current_user, success: "予約を承認しました。"
+    workflow = ApproveReservation.new(timesheet: timesheet)
+    workflow.run
+    if workflow.success
+      flash[:success] = "予約を承認しました。"
+      redirect_to current_user
     else
-      redirect_to current_user, danger: "予約の承認に失敗しました。"
+      redirect_to root_path
     end
-  end
-
-  def destroy
-    @ticket.destroy!
-    redirect_to current_user, success: "予約をキャンセルしました。"
-  rescue ActiveRecord::RecordNotDestroyed
-    redirect_to root_url, danger: "予約のキャンセルに失敗しました。"
   end
 
   private
