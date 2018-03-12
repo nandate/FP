@@ -12,7 +12,7 @@ class ApprovedTicketsController < ApplicationController
 
   def set_timesheet_and_ticket
     @timesheet = current_user.timesheets.find(params[:timesheet_id])
-    @ticket = Ticket.find(params[:ticket_id])
+    @ticket = @timesheet.find(params[:ticket_id])
   rescue ActiveRecord::RecordNotFound => e
     redirect_to root_url, danger: "リソースが見つかりませんでした。#{e.record.errors.join(',')}"
   end
