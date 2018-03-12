@@ -8,9 +8,6 @@ class ApprovedTicketsController < ApplicationController
     redirect_to timesheet, danger: "予約の承認に失敗しました。#{e.record.errors.join(',')}"
   end
 
-  def destroy
-  end
-
   private
 
   def set_timesheet_and_ticket
