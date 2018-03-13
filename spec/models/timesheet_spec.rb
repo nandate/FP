@@ -52,6 +52,11 @@ RSpec.describe Timesheet, type: :model do
         expect(timesheet).not_to be_valid
         expect(timesheet.errors[:start_time]).to include('平日は10:00~18:00のみ作成できます。')
       end
+
+      it 'is valid with a reservate at 17:30 in Friday' do
+        timesheet = build(:timesheet, start_time: Time.zone.local(2019, 12, 6, 17, 30, 0))
+        expect(timesheet).to be_valid
+      end
     end
   end
 end
