@@ -1,5 +1,5 @@
 class TicketsController < ApplicationController
-  before_action :load_timesheet, only: %i(create)
+  before_action :set_timesheet, only: %i(create)
   before_action :correct_user, only: %i(destroy)
   before_action :permit_only_normal_user!
 
@@ -19,7 +19,7 @@ class TicketsController < ApplicationController
 
   private
 
-  def load_timesheet
+  def set_timesheet
     @timesheet = Timesheet.find(params[:timesheet_id])
   end
 
