@@ -21,5 +21,11 @@ RSpec.describe Timesheet, type: :model do
       expect(timesheet).not_to be_valid
       expect(timesheet.errors[:start_time]).to include(':この時刻では作成できません。')
     end
+
+    it 'is invalid with a reservate in sunday' do
+      timesheet = build(:timesheet, start_time: Time.zone.local(2019, 12, 8, 12, 0, 0))
+      expect(timesheet).not_to be_valid
+      expect(timesheet.errors[:start_time]).to include(':日曜日は作成できません。')
+    end
   end
 end
