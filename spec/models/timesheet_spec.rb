@@ -57,6 +57,11 @@ RSpec.describe Timesheet, type: :model do
         timesheet = build(:timesheet, start_time: Time.zone.local(2019, 12, 6, 17, 30, 0))
         expect(timesheet).to be_valid
       end
+
+      it 'is valid with a reservate at 10:00 in Friday' do
+        timesheet = build(:timesheet, start_time: Time.zone.local(2019, 12, 6, 10, 0, 0))
+        expect(timesheet).to be_valid
+      end
     end
   end
 end
