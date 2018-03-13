@@ -1,5 +1,6 @@
 class ApprovedTicketsController < ApplicationController
   before_action :set_timesheet_and_ticket
+  before_action :permit_only_fp_user!
 
   def create
     @timesheet.create_approved_ticket!(ticket: @ticket)
@@ -15,5 +16,9 @@ class ApprovedTicketsController < ApplicationController
     @ticket = @timesheet.find(params[:ticket_id])
   rescue ActiveRecord::RecordNotFound => e
     redirect_to root_url, danger: "リソースが見つかりませんでした。#{e.record.errors.join(',')}"
+  end
+
+  def permit_only_fp_user!
+    redirect_to root_url unless current_user.fp?
   end
 end
