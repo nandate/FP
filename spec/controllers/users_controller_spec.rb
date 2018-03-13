@@ -7,12 +7,16 @@ RSpec.describe UsersController, type: :controller do
     context "as logged in" do
       before do
         sign_in user
+        get :show, params: { id: user.id }
       end
 
       it "responds successfully" do
-        get :show, params: { id: user.id }
         expect(response).to be_success
         expect(response.status).to eq 200
+      end
+
+      it "assigns the requested user to @user" do
+        expect(assigns(:user)).to eq user
       end
     end
 
