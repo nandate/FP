@@ -13,4 +13,9 @@ RSpec.describe User, type: :model do
     subject { build(:user, email: "test@example.com") }
     it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
   end
+
+  describe "is invalid with a duplicate name" do
+    subject { build(:user, name: "joe") }
+    it { is_expected.to validate_uniqueness_of(:name) }
+  end
 end
