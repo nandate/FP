@@ -8,6 +8,6 @@ class User < ApplicationRecord
   has_many :timesheets
   has_many :tickets
   has_many :applied_timesheets, through: :tickets, source: 'timesheet'
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
   validates :role, presence: true
 end
