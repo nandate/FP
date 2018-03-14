@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe TimesheetsController, type: :controller do
-  let(:fp_user) { create(:user, name: "fp", email: "fp@example.com", role: 'fp') }
-  let(:normal_user) { create(:user, name: "taro", email: "test2@example.com") }
+  let(:fp_user) { create(:fp_user) }
+  let(:normal_user) { create(:user) }
   let(:timesheet) { create(:timesheet, user: fp_user) }
+  let(:invalid_timesheet) { create(:timesheet) }
   let(:timesheets) { Timesheet.all.order_by_start_time }
   let(:timesheet_params) { attributes_for(:timesheet) }
 
@@ -82,7 +83,9 @@ RSpec.describe TimesheetsController, type: :controller do
       end
 
       it 'save the new timesheet in the DB' do
-        expect { post :create, params: { timesheet: timesheet_params } }.to change(Timesheet, :count).by(1)
+        expect {
+          post :create, params: { timesheet: timesheet_params }
+        }.to change(Timesheet, :count).by(1)
       end
     end
   end
