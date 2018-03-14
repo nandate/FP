@@ -72,9 +72,7 @@ RSpec.describe TimesheetsController, type: :controller do
 
   describe 'POST #create' do
     context 'as logged in fp_user' do
-      before do
-        sign_in fp_user
-      end
+      before { sign_in fp_user }
 
       it 'return a 302 response' do
         post :create, params: { timesheet: timesheet_params }
