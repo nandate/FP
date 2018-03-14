@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Timesheet, type: :model do
   let(:timesheet) { build(:timesheet) }
+  let(:fp_user) { create(:fp_user) }
 
   it { expect(timesheet).to be_valid }
 
@@ -61,6 +62,14 @@ RSpec.describe Timesheet, type: :model do
       it 'is valid with a reservate at 10:00 in Friday' do
         timesheet = build(:timesheet, start_time: Time.zone.local(2019, 12, 6, 10, 0, 0))
         expect(timesheet).to be_valid
+      end
+    end
+
+    context 'validation same time' do
+      let(:timesheet2) { create(:timesheet, user: fp_user) }
+      it 'is invalid with a same user in same time' do
+        expect(timesheet2).not_to be_valid
+        expect(timesheet2.errors[:start_time]).to include(':この時間にはすでに予約が作成されています。')
       end
     end
   end
