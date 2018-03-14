@@ -2,9 +2,9 @@ require 'rails_helper'
 
 RSpec.describe TimesheetsController, type: :controller do
   let(:fp_user) { create(:fp_user) }
+  let(:other_fp_user) { create(:fp_user, name: "fp2", email: "fp2@explame.com") }
   let(:normal_user) { create(:user) }
   let(:timesheet) { create(:timesheet, user: fp_user) }
-  let(:invalid_timesheet) { create(:timesheet) }
   let(:timesheets) { Timesheet.all.order_by_start_time }
   let(:timesheet_params) { attributes_for(:timesheet) }
 
@@ -86,6 +86,33 @@ RSpec.describe TimesheetsController, type: :controller do
         expect {
           post :create, params: { timesheet: timesheet_params }
         }.to change(Timesheet, :count).by(1)
+      end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    context 'as an authorized user' do
+      before { sign_in fp_user }
+
+      it 'deletes the timesheet' do
+        expect {
+          delete :destroy, params: { id: timesheet.id }
+        }.to change(fp_user.timesheets, :count).by(-1)
+      end
+    end
+
+    context 'as an unauthorized user' do
+      before { sign_in other_fp_user }
+
+      it 'does not delete the timesheet' do
+        expect {
+          delete :destroy, params: { id: timesheet.id }
+        }.not_to change(Timesheet, :count)
+      end
+
+      it 'redirect to root_url' do
+        delete :destroy, params: { id: timesheet.id }
+        expect(response).to redirect_to root_url
       end
     end
   end
