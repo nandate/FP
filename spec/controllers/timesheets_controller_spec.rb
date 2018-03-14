@@ -88,6 +88,20 @@ RSpec.describe TimesheetsController, type: :controller do
         }.to change(Timesheet, :count).by(1)
       end
     end
+
+    context 'as logged in normal_user' do
+      before { sign_in normal_user }
+      it 'does not save the timesheet in the DB' do
+        expect {
+          post :create, params: { timesheet: timesheet_params }
+        }.not_to change(Timesheet, :count)
+      end
+
+      it 'redirect to root_url' do
+        post :create, params: { timesheet: timesheet_params }
+        expect(response).to redirect_to root_url
+      end
+    end
   end
 
   describe 'DELETE #destroy' do
