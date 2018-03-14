@@ -6,14 +6,11 @@ RSpec.describe UsersController, type: :controller do
     let(:user2) { create(:user, name: "taro", email: "test2@example.com") }
 
     context "as logged in" do
-      before do
-        sign_in user
-      end
+      before { sign_in user }
 
       context "as an authorized user" do
-        before do
-          get :show, params: { id: user.id }
-        end
+        before { get :show, params: { id: user.id } }
+
         it "responds successfully" do
           expect(response).to be_success
           expect(response.status).to eq 200
@@ -25,9 +22,7 @@ RSpec.describe UsersController, type: :controller do
       end
 
       context "as an unauthorized user" do
-        before do
-          get :show, params: { id: user2.id }
-        end
+        before { get :show, params: { id: user2.id } }
 
         it "redirect_to root_url" do
           expect(response).to redirect_to root_url
