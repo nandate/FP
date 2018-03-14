@@ -1,15 +1,15 @@
 require 'rails_helper'
 
 RSpec.describe TimesheetsController, type: :controller do
-  let(:user) { create(:user, name: "fp", email: "fp@example.com", role: 'fp') }
-  let(:user2) { create(:user, name: "taro", email: "test2@example.com") }
-  let(:timesheet) { create(:timesheet, user: user) }
+  let(:fp_user) { create(:user, name: "fp", email: "fp@example.com", role: 'fp') }
+  let(:normal_user) { create(:user, name: "taro", email: "test2@example.com") }
+  let(:timesheet) { create(:timesheet, user: fp_user) }
   let(:timesheets) { Timesheet.all.order_by_start_time }
 
   describe 'GET #index' do
     context 'as logged in' do
       before do
-        sign_in user
+        sign_in fp_user
         get :index
       end
 
@@ -38,7 +38,7 @@ RSpec.describe TimesheetsController, type: :controller do
   describe 'GET #show' do
     context 'as authorized user' do
       before do
-        sign_in user
+        sign_in fp_user
         get :show, params: { id: timesheet.id }
       end
 
@@ -57,7 +57,7 @@ RSpec.describe TimesheetsController, type: :controller do
 
     context 'as unauthorized user' do
       before do
-        sign_in user2
+        sign_in normal_user
         get :show, params: { id: timesheet.id }
       end
 
