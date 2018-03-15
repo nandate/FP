@@ -27,6 +27,7 @@ RSpec.describe TicketsController, type: :controller do
 
   describe 'DELETE #destory' do
     let(:ticket) { create(:ticket, user: user, timesheet: timesheet) }
+    let(:other_user) { create(:user, name: "b", email: "b@example.com") }
     let(:params) do
       {
         timesheet_id: timesheet.id,
@@ -41,6 +42,13 @@ RSpec.describe TicketsController, type: :controller do
       it { expect(subject.status).to eq 302 }
       it { expect { subject }.to change(Ticket, :count).by(-1) }
       it { expect(subject).to redirect_to user }
+    end
+
+    context 'an unauthorized user' do
+      before { sign_in other_user }
+
+      it { expect { subject }.not_to change(Ticket, :count) }
+      it { expect(subject).to redirect_to root_url }
     end
   end
 end
