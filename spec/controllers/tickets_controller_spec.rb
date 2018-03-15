@@ -9,6 +9,7 @@ RSpec.describe TicketsController, type: :controller do
 
     let(:params) do
       {
+        timesheet_id: timesheet.id,
         ticket: {
           user_id: user.id,
           timesheet_id: timesheet.id
@@ -20,7 +21,7 @@ RSpec.describe TicketsController, type: :controller do
     context 'create success' do
       it { expect(subject.status).to eq 302 }
       it { expect { subject }.to change(Ticket, :count).by(1) }
-      it { expect(subject).to redirect_to current_user }
+      it { expect(subject).to redirect_to user }
     end
   end
 end
