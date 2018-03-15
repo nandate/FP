@@ -24,4 +24,23 @@ RSpec.describe TicketsController, type: :controller do
       it { expect(subject).to redirect_to user }
     end
   end
+
+  describe 'DELETE #destory' do
+    let(:ticket) { create(:ticket, user: user, timesheet: timesheet) }
+    let(:params) do
+      {
+        timesheet_id: timesheet.id,
+        id: ticket.id
+      }
+    end
+    subject { delete :destory, params: params }
+
+    context 'an authorized user' do
+      before { sign_in user }
+
+      it { expect(subject.status).to eq 302 }
+      it { expect { subject }.to change(Ticket, :count).by(-1) }
+      it { expect(subject).to redirect_to user }
+    end
+  end
 end
