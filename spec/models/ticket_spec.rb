@@ -7,4 +7,9 @@ RSpec.describe Ticket, type: :model do
   let(:ticket) { build(:ticket, user: user, timesheet: timesheet) }
 
   it { expect(ticket).to be_valid }
+
+  describe 'association test' do
+    it { is_expected.to belong_to(:user) }
+    it { is_expected.to belong_to(:timesheet) }
+  end
 end
