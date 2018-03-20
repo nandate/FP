@@ -10,12 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180220132200) do
+ActiveRecord::Schema.define(version: 20180313025501) do
+
+  create_table "approved_tickets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.bigint "user_id"
+    t.bigint "timesheet_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["timesheet_id"], name: "index_approved_tickets_on_timesheet_id"
+    t.index ["user_id", "timesheet_id"], name: "index_approved_tickets_on_user_id_and_timesheet_id", unique: true
+    t.index ["user_id"], name: "index_approved_tickets_on_user_id"
+  end
 
   create_table "tickets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "user_id"
     t.bigint "timesheet_id"
-    t.integer "status", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["timesheet_id"], name: "index_tickets_on_timesheet_id"
@@ -45,10 +54,12 @@ ActiveRecord::Schema.define(version: 20180220132200) do
     t.integer "role"
     t.string "name", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["name", "id"], name: "index_users_on_name_and_id", unique: true
+    t.index ["name"], name: "index_users_on_name", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "approved_tickets", "timesheets"
+  add_foreign_key "approved_tickets", "users"
   add_foreign_key "tickets", "timesheets"
   add_foreign_key "tickets", "users"
   add_foreign_key "timesheets", "users"

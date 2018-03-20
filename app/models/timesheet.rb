@@ -1,6 +1,7 @@
 class Timesheet < ApplicationRecord
   belongs_to :user
   has_many :tickets
+  has_one :approved_ticket
   validates :start_time, presence: true
   validates :user, presence: true
   validate :validate_past
@@ -8,8 +9,6 @@ class Timesheet < ApplicationRecord
   validate :validate_time_step
   validate :validate_double_book
   scope :order_by_start_time, -> { order(:start_time) }
-  scope :waiting, -> { joins(:tickets).merge(Ticket.waiting) }
-  scope :approved, -> { joins(:tickets).merge(Ticket.approved) }
 
   TIMES = ["10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00",
            "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30",
