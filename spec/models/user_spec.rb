@@ -10,7 +10,7 @@ RSpec.describe User, type: :model do
   it { is_expected.to validate_presence_of(:password) }
 
   describe "is invalid with a duplicate email address" do
-    subject { build(:user, email: "test@example.com") }
+    subject { build(:user) }
     it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
   end
 
