@@ -5,6 +5,7 @@ RSpec.describe TimesheetsController, type: :controller do
   let(:other_fp_user) { create(:fp_user, name: "fp2", email: "fp2@explame.com") }
   let(:normal_user) { create(:user) }
   let(:timesheet) { create(:timesheet) }
+  let(:timesheet_params) { attributes_for(:timesheet) }
   let(:timesheets) { Timesheet.all.order_by_start_time }
 
   describe 'GET #index' do
@@ -72,27 +73,22 @@ RSpec.describe TimesheetsController, type: :controller do
   describe 'POST #create' do
     context 'as logged in fp_user' do
       before { sign_in fp_user }
-      let(:timesheet_params) { attributes_for(:timesheet) }
       subject { post :create, params: timesheet_params }
 
       it 'create success' do
-        expect(response).to redirect_to timesheets_path
-        expect(response.status).to eq 302
+        expect(subject).to redirect_to timesheets_path
+        expect(subject.status).to eq 302
         expect { subject }.to change(Timesheet, :count).by(1)
       end
     end
 
     context 'as logged in normal_user' do
       before { sign_in normal_user }
-      it 'does not save the timesheet in the DB' do
-        expect {
-          post :create, params: { timesheet: timesheet_params }
-        }.not_to change(Timesheet, :count)
-      end
+      subject { post :create, params: timesheet_params }
 
-      it 'redirect to root_url' do
-        post :create, params: { timesheet: timesheet_params }
-        expect(response).to redirect_to root_url
+      it 'create failed' do
+        expect { subject }.not_to change(TimeSheet, :count)
+        expect(subject).to redirect_to root_url
       end
     end
   end
