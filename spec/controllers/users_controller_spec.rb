@@ -30,6 +30,7 @@ RSpec.describe UsersController, type: :controller do
         end
       end
     end
+
     context "as not logged in" do
       it "returns a 302 response" do
         get :show, params: { id: user.id }
