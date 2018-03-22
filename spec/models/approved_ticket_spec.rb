@@ -9,4 +9,9 @@ RSpec.describe ApprovedTicket, type: :model do
     it { is_expected.to validate_presence_of(:timesheet) }
     it { is_expected.to validate_presence_of(:ticket) }
   end
+
+  describe 'associations' do
+    it { is_expected.to belong_to(:timesheet) }
+    it { is_expected.to belong_to(:ticket) }
+  end
 end
