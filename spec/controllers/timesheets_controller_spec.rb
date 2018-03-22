@@ -83,19 +83,18 @@ RSpec.describe TimesheetsController, type: :controller do
     context 'as logged in normal_user' do
       before { sign_in normal_user }
 
-      expect { subject }.not_to change(Timesheet, :count)
-      expect(subject).to redirect_to root_url
+      it { expect { subject }.not_to change(Timesheet, :count) }
+      it { expect(subject).to redirect_to root_url }
     end
   end
 
   describe 'DELETE #destroy' do
+    subject { delete :destroy, params: { id: timesheet.id } }
     context 'as an authorized user' do
       before { sign_in fp_user }
 
       it 'deletes the timesheet' do
-        expect {
-          delete :destroy, params: { id: timesheet.id }
-        }.to change(fp_user.timesheets, :count).by(-1)
+        expect { subject }.to change(fp_user.timesheets, :count).by(-1)
       end
     end
 
@@ -103,14 +102,11 @@ RSpec.describe TimesheetsController, type: :controller do
       before { sign_in other_fp_user }
 
       it 'does not delete the timesheet' do
-        expect {
-          delete :destroy, params: { id: timesheet.id }
-        }.not_to change(Timesheet, :count)
+        expect { subject }.not_to change(Timesheet, :count)
       end
 
       it 'redirect to root_url' do
-        delete :destroy, params: { id: timesheet.id }
-        expect(response).to redirect_to root_url
+        expect(subject).to redirect_to root_url
       end
     end
   end
