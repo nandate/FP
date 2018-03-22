@@ -34,7 +34,7 @@ RSpec.describe UsersController, type: :controller do
     context "as not logged in" do
       it "returns a 302 response" do
         get :show, params: { id: user.id }
-        expect(response).to redirect_to "/users/sign_in"
+        expect(response).to redirect_to new_user_session_url
         expect(response.status).to eq 302
       end
     end
