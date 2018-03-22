@@ -14,13 +14,9 @@ RSpec.describe User, type: :model do
 
   it { is_expected.to define_enum_for(:role) }
 
-  describe "is invalid with a duplicate email address" do
-    subject { build(:user) }
-    it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
-  end
-
-  describe "is invalid with a duplicate name" do
+  describe "uniqueness_tests" do
     subject { build(:user) }
     it { is_expected.to validate_uniqueness_of(:name) }
+    it { is_expected.to validate_uniqueness_of(:email).case_insensitive }
   end
 end
