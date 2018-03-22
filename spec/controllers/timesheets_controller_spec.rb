@@ -31,7 +31,7 @@ RSpec.describe TimesheetsController, type: :controller do
     context 'as not logged in' do
       it 'returns a 302 response ' do
         get :index
-        expect(response).to redirect_to "/users/sign_in"
+        expect(response).to redirect_to new_user_session_path
         expect(response.status).to eq 302
       end
     end
