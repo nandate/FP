@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :timesheets
   has_many :tickets
   has_many :applied_timesheets, through: :tickets, source: 'timesheet'
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true, uniqueness: true, length: { maximum: 50 }
+  validates :email, length: { maximum: 255 }
   validates :role, presence: true
 end
