@@ -5,8 +5,8 @@ RSpec.describe TimesheetsController, type: :controller do
   let(:other_fp_user) { create(:fp_user, name: "fp2", email: "fp2@explame.com") }
   let(:normal_user) { create(:user) }
   let(:timesheet) { create(:timesheet, user: fp_user) }
-  let(:timesheets) { Timesheet.all.order_by_start_time }
   let(:timesheet_params) { attributes_for(:timesheet) }
+  let(:timesheets) { Timesheet.all.order_by_start_time }
 
   describe 'GET #index' do
     context 'as logged in' do
@@ -31,7 +31,7 @@ RSpec.describe TimesheetsController, type: :controller do
     context 'as not logged in' do
       it 'returns a 302 response ' do
         get :index
-        expect(response).to redirect_to "/users/sign_in"
+        expect(response).to redirect_to new_user_session_path
         expect(response.status).to eq 302
       end
     end
@@ -71,45 +71,30 @@ RSpec.describe TimesheetsController, type: :controller do
   end
 
   describe 'POST #create' do
+    subject { post :create, params: { timesheet: timesheet_params } }
     context 'as logged in fp_user' do
       before { sign_in fp_user }
 
-      it 'return a 302 response' do
-        post :create, params: { timesheet: timesheet_params }
-        expect(response).to redirect_to timesheets_path
-        expect(response.status).to eq 302
-      end
-
-      it 'save the new timesheet in the DB' do
-        expect {
-          post :create, params: { timesheet: timesheet_params }
-        }.to change(Timesheet, :count).by(1)
-      end
+      it { expect(subject).to redirect_to timesheets_path }
+      it { expect(subject.status).to eq 302 }
+      it { expect { subject }.to change(Timesheet, :count).by(1) }
     end
 
     context 'as logged in normal_user' do
       before { sign_in normal_user }
-      it 'does not save the timesheet in the DB' do
-        expect {
-          post :create, params: { timesheet: timesheet_params }
-        }.not_to change(Timesheet, :count)
-      end
 
-      it 'redirect to root_url' do
-        post :create, params: { timesheet: timesheet_params }
-        expect(response).to redirect_to root_url
-      end
+      it { expect { subject }.not_to change(Timesheet, :count) }
+      it { expect(subject).to redirect_to root_url }
     end
   end
 
   describe 'DELETE #destroy' do
+    subject { delete :destroy, params: { id: timesheet.id } }
     context 'as an authorized user' do
       before { sign_in fp_user }
 
       it 'deletes the timesheet' do
-        expect {
-          delete :destroy, params: { id: timesheet.id }
-        }.to change(fp_user.timesheets, :count).by(-1)
+        expect { subject }.to change(fp_user.timesheets, :count).by(-1)
       end
     end
 
@@ -117,14 +102,11 @@ RSpec.describe TimesheetsController, type: :controller do
       before { sign_in other_fp_user }
 
       it 'does not delete the timesheet' do
-        expect {
-          delete :destroy, params: { id: timesheet.id }
-        }.not_to change(Timesheet, :count)
+        expect { subject }.not_to change(Timesheet, :count)
       end
 
       it 'redirect to root_url' do
-        delete :destroy, params: { id: timesheet.id }
-        expect(response).to redirect_to root_url
+        expect(subject).to redirect_to root_url
       end
     end
   end

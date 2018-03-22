@@ -6,8 +6,15 @@ RSpec.describe Timesheet, type: :model do
 
   it { expect(timesheet).to be_valid }
 
+  describe 'validations' do
+    it { is_expected.to validate_presence_of(:start_time) }
+    it { is_expected.to validate_presence_of(:user) }
+  end
+
   describe 'association test' do
     it { is_expected.to belong_to(:user) }
+    it { is_expected.to have_many(:tickets) }
+    it { is_expected.to have_one(:approved_ticket) }
   end
 
   describe 'validation test' do
