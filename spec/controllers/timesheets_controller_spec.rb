@@ -71,9 +71,9 @@ RSpec.describe TimesheetsController, type: :controller do
   end
 
   describe 'POST #create' do
+    subject { post :create, params: timesheet_params }
     context 'as logged in fp_user' do
       before { sign_in fp_user }
-      subject { post :create, params: timesheet_params }
 
       it 'create success' do
         expect(subject).to redirect_to timesheets_path
@@ -84,7 +84,6 @@ RSpec.describe TimesheetsController, type: :controller do
 
     context 'as logged in normal_user' do
       before { sign_in normal_user }
-      subject { post :create, params: timesheet_params }
 
       it 'create failed' do
         expect { subject }.not_to change(TimeSheet, :count)
