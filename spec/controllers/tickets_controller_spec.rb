@@ -34,7 +34,7 @@ RSpec.describe TicketsController, type: :controller do
         id: ticket.id
       }
     end
-    subject { delete :destory, params: params }
+    subject { delete :destroy, params: params }
 
     context 'an authorized user' do
       before { sign_in user }
