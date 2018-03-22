@@ -2,31 +2,26 @@ h1 = @user.email
 h1 = @user.name
 
 - if current_user.fp?
-  =link_to "予定枠の作成", new_timesheet_path
   h1 投稿した予約一覧
-  - @user.timesheets.each do |timesheet|
+  - @timesheets.each do |timesheet|
     .panel.panel-default
       .container
-        h3 =timesheet.start_time
-        - unless timesheet.ticket.nil?
-          h3 予約者:#{timesheet.ticket.user.name}
-          h3 ステータス:#{timesheet.ticket.status}
+        h3 = timesheet.start_time
+        - if timesheet.approved_ticket.nil?
+          h3 = timesheet.tickets.size
+          = link_to "予約者一覧", timesheet
         - else
-          h3 未予約
-
+          h3 承認済み
 - else
-  =link_to "予定枠一覧", timesheets_path
-
-  h1 承認待ちの予約
-  - @user.waiting_reservations.each do |reservation|
+  h1 チケット一覧
+  - @tickets.each do |ticket|
     .panel.panel-default
       .container
-        h3 =reservation.start_time
-        h3 =reservation.user.name
-
-  h1 承認済みの予約
-  - @user.approved_reservations.each do |reservation|
-    .panel.panel-default
-      .container
-        h3 =reservation.start_time
-        h3 =reservation.user.name
+        h3 = ticket.timesheet.start_time
+        h3 = ticket.timesheet.user.name
+        - if ticket.timesheet.approved_ticket.nil?
+          h3 未承認
+        - else
+          h3 承認済み
+        = form_for [ticket.timesheet, ticket], method: :delete do |f|
+          = f.submit "キャンセルする", class: "btn btn-default", data: { confirm: "本当にキャンセルしますか？" }
