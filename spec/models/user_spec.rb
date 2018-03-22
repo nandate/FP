@@ -15,7 +15,7 @@ RSpec.describe User, type: :model do
   end
 
   describe "is invalid with a duplicate name" do
-    subject { build(:user, name: "joe") }
+    subject { build(:user) }
     it { is_expected.to validate_uniqueness_of(:name) }
   end
 end
