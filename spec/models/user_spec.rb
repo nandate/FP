@@ -16,7 +16,10 @@ RSpec.describe User, type: :model do
     it { is_expected.to validate_length_of(:password).is_at_most(128) }
   end
 
-  it { is_expected.to define_enum_for(:role) }
+  describe 'enum tests' do
+    it { is_expected.to define_enum_for(:role) }
+    it { is_expected.to define_enum_for(:role).with(%i(user fp)) }
+  end
 
   describe "uniqueness tests" do
     subject { build(:user) }
