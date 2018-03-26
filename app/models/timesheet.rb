@@ -40,11 +40,11 @@ class Timesheet < ApplicationRecord
     when 0
       errors.add(:start_time, ":日曜日は作成できません。")
     when 6
-      if start_time.hour < 11 || start_time.hour > 14
+      if start_time.hour < 11 || start_time.hour > 15
         errors.add(:start_time, ":土曜日は11:00~15:00のみ作成できます。")
       end
     else
-      if start_time.hour < 10 || start_time.hour > 17
+      if start_time.hour < 10 || start_time.hour > 18
         errors.add(:start_time, "平日は10:00~18:00のみ作成できます。")
       end
     end
