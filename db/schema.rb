@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180313025501) do
+ActiveRecord::Schema.define(version: 20180326012932) do
 
   create_table "approved_tickets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "user_id"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 20180313025501) do
     t.bigint "timesheet_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "message", null: false
+    t.integer "charge", null: false
     t.index ["timesheet_id"], name: "index_tickets_on_timesheet_id"
     t.index ["user_id", "timesheet_id"], name: "index_tickets_on_user_id_and_timesheet_id", unique: true
     t.index ["user_id"], name: "index_tickets_on_user_id"
