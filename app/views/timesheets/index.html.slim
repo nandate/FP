@@ -6,8 +6,17 @@ h1 All TimeSheets
       h3 ファイナンシャルプランナー:#{timesheet.user.name}
       - ticket = timesheet.tickets.build
       = form_for [timesheet, ticket] do |f|
-        = f.text_field :message, placeholder: "メッセージ"
-        = f.number_field :charge, placeholder: "コンサル料金(円)"
-        = f.submit "予約する", class: "btn btn-default"
+        .form-group
+          .row
+            .col-xs-9
+              = f.text_area :message, placeholder: "メッセージ", class: "form-control"
+        .form-group
+          .row
+            .col-xs-3
+              = f.number_field :charge, placeholder: "コンサル料金(円)", class: "form-control"
+        .form-group
+          .row
+            .col-xs-3
+              = f.submit "予約する", class: "btn btn-default"
       - if current_user == timesheet.user
         = link_to "削除", timesheet, method: :delete
