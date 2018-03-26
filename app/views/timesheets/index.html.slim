@@ -4,19 +4,22 @@ h1 All TimeSheets
     .container
       h3 開始時刻:#{timesheet.start_time}
       h3 ファイナンシャルプランナー:#{timesheet.user.name}
-      - ticket = timesheet.tickets.build
-      = form_for [timesheet, ticket] do |f|
-        .form-group
-          .row
-            .col-xs-9
-              = f.text_area :message, placeholder: "メッセージ", class: "form-control"
-        .form-group
-          .row
-            .col-xs-3
-              = f.number_field :charge, placeholder: "コンサル料金(円)", class: "form-control"
-        .form-group
-          .row
-            .col-xs-3
-              = f.submit "予約する", class: "btn btn-default"
+      - if timesheet.approved_ticket.nil?
+        - ticket = timesheet.tickets.build
+        = form_for [timesheet, ticket] do |f|
+          .form-group
+            .row
+              .col-xs-9
+                = f.text_area :message, placeholder: "メッセージ", class: "form-control"
+          .form-group
+            .row
+              .col-xs-3
+                = f.number_field :charge, placeholder: "コンサル料金(円)", class: "form-control"
+          .form-group
+            .row
+              .col-xs-3
+                = f.submit "予約する", class: "btn btn-default"
+      - else
+        h1 満席
       - if current_user == timesheet.user
         = link_to "削除", timesheet, method: :delete
