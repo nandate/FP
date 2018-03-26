@@ -14,4 +14,12 @@ FactoryBot.define do
     password_confirmation "password"
     role "fp"
   end
+
+  factory :other_fp_user, class: User do
+    name "fp2"
+    email "fp2@example.com"
+    password "password"
+    password_confirmation "password"
+    role "fp"
+  end
 end

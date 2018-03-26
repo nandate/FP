@@ -16,6 +16,11 @@ RSpec.describe User, type: :model do
     it { is_expected.to validate_length_of(:password).is_at_most(128) }
   end
 
+  describe 'associations' do
+    it { is_expected.to have_many(:timesheets) }
+    it { is_expected.to have_many(:tickets) }
+  end
+
   describe 'enum tests' do
     it { is_expected.to define_enum_for(:role) }
     it { is_expected.to define_enum_for(:role).with(%i(user fp)) }
